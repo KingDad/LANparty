@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_06_175455) do
+ActiveRecord::Schema.define(version: 2019_05_06_205906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["event_id"], name: "index_attendances_on_event_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "title", null: false
@@ -23,10 +30,24 @@ ActiveRecord::Schema.define(version: 2019_05_06_175455) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_favorites_on_game_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.integer "max_players"
+  end
+
+  create_table "playables", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "event_id"
+    t.index ["event_id"], name: "index_playables_on_event_id"
+    t.index ["game_id"], name: "index_playables_on_game_id"
   end
 
   create_table "users", force: :cascade do |t|
