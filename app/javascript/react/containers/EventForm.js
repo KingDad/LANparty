@@ -8,6 +8,7 @@ class EventForm extends Component {
   constructor(props){
     super(props)
     this.takeChange = this.takeChange.bind(this)
+    this.createEvent = this.createEvent.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.addGame = this.addGame.bind(this)
     this.state = {
@@ -24,17 +25,38 @@ class EventForm extends Component {
   }
 
   createEvent(payload){
-
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    fetch(`/api/v1/events`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        let errorMessage = `${response.status}(${response.statusText})` ,
+        error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleFormSubmit(event){
     event.preventDefault();
     let formPayload = {
-      title: this.props.restaurantId,
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
+      event_datetime: this.state.eventDateTime,
+      twitch_stream: this.state.twitchStream,
+      playables: this.state.gameIDs
     }
-    this.props.createEvent(formPayload);
+    this.createEvent(formPayload);
   }
 
   addGame(gameID){

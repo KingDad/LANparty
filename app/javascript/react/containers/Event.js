@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TwitchContainer from '../components/TwitchContainer'
+import GameTile from '../components/GameTile'
 
 class Event extends Component {
   constructor(props){
@@ -24,7 +25,7 @@ class Event extends Component {
       })
       .then(response => response.json())
       .then(response => {
-        this.setState({event: response})
+        this.setState({event: response.event})
         console.log(this.state)
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -51,6 +52,7 @@ class Event extends Component {
     let eventDateTime
     let eventStream
     let twitchPieces
+    let gameTiles
 
     if(this.state.event){
       eventTitle = this.state.event.title
@@ -58,12 +60,18 @@ class Event extends Component {
       eventDateTime = this.printDate(this.state.event.event_datetime)
       eventStream = this.state.event.twitch_stream
       twitchPieces = <TwitchContainer stream={eventStream} />
+      gameTiles = this.state.event.playables.map((game) => {
+        return(
+          <GameTile key={ game.id } gameID={ game.game_id } />
+        )
+      })
     }
 
     return(
       <div className="container">
         <h2>{eventTitle}</h2>
         {twitchPieces}
+        {gameTiles}
         <p>{eventDescription}</p>
         <p>{eventDateTime}</p>
       </div>

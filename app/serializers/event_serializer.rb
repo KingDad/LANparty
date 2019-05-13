@@ -1,6 +1,7 @@
 class EventSerializer < ActiveModel::Serializer
   attributes :id, :title, :description, :event_datetime, :user_id
 
+  has_many :playables
   has_many :attendances
 
   def user_id

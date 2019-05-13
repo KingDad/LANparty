@@ -29,7 +29,6 @@ class TwitchContainer extends Component {
       })
     });
     document.body.appendChild(script);
-    console.log(this.props)
   }
 
   render(){

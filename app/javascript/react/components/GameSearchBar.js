@@ -33,7 +33,6 @@ class SearchBar extends Component{
       data: "fields name;"
     })
     .then(response => {
-      console.log(response.data)
       this.setState({searchResults: response.data});
     })
     .catch(err => {
