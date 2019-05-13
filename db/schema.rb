@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_001741) do
+ActiveRecord::Schema.define(version: 2019_05_09_231842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["event_id"], name: "index_attendances_on_event_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "event_datetime", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "creator_id", default: 1, null: false
+    t.string "twitch_stream", default: ""
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "game_id", null: false
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "playables", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.bigint "event_id"
+    t.index ["event_id"], name: "index_playables_on_event_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
