@@ -22,10 +22,7 @@ class Events extends Component{
       })
       .then(response => response.json())
       .then(response => {
-        let events = response
-        console.log(response)
-        this.setState({events: events})
-        console.log(this.state)
+        this.setState({events: response.events})
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -36,14 +33,19 @@ class Events extends Component{
     if (this.state.events) {
       events = this.state.events.map(event => {
         return (
-          <Link to={`/events/${event.id}`} key={event.id}>{event.title}</Link>
+          <li key={event.id}>
+            <Link to={`/events/${event.id}`}>{event.title}</Link>
+          </li>
         )
       })
     }
     return(
 
       <div className="container">
-        {events}
+        <ul>
+          {events}
+        </ul>
+        <a href="/events/new">Create New Event</a>
       </div>
     )
   }

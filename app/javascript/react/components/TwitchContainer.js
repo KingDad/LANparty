@@ -15,16 +15,16 @@ class TwitchContainer extends Component {
     );
     script.addEventListener('load', () => {
       player = new Twitch.Player('twitch-embed', {
-        width: 480,
-        height: 360,
+        width: 720,
+        height: 480,
         channel: this.props.stream
       });
       player.addEventListener(Twitch.Player.ONLINE, ()=>{
-        let container = document.getElementById('container')
+        let container = document.getElementById('twitch-container')
         container.style.display = "inline-block"
       })
       player.addEventListener(Twitch.Player.OFFLINE, ()=>{
-        let container = document.getElementById('container')
+        let container = document.getElementById('twitch-container')
         container.style.display = "none"
       })
     });
@@ -33,18 +33,16 @@ class TwitchContainer extends Component {
 
   render(){
     return(
-      <div>
-        <div id="container">
-          <div id="twitch-embed"></div>
-          <iframe
-            frameBorder="0"
-            scrolling="no"
-            id="chat-embed"
-            src={`https://www.twitch.tv/embed/${this.props.stream}/chat`}
-            height="480"
-            width="300">
-          </iframe>
-        </div>
+      <div id="twitch-container">
+        <div id="twitch-embed"></div>
+        <iframe
+          frameBorder="0"
+          scrolling="no"
+          id="chat-embed"
+          src={`https://www.twitch.tv/embed/${this.props.stream}/chat`}
+          height="480"
+          width="300">
+        </iframe>
       </div>
     )
   }

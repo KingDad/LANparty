@@ -10,7 +10,7 @@ export const App = props => {
 
     return(
       <Router history={browserHistory}>
-        <Route path="/" component={ Home }/>
+        <Route path="/" component={ Events }/>
         <Route path="/events" component={ Events }/>
         <Route path="/events/new" component={ EventForm }/>
         <Route path="/events/:id" component={ Event }/>

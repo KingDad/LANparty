@@ -58,11 +58,11 @@ class GameTile extends Component{
     let coverImg
 
     if (this.state.gameName){
-      gameTitle = <p>{this.state.gameName}</p>
+      gameTitle = <p className="game-title">{this.state.gameName}</p>
     }
 
     if (this.state.gameCover){
-      coverImg = <img src={`https:${this.state.gameCover}`} alt="No Cover Art Available"/>
+      coverImg = <img src={`https:${this.state.gameCover}`} alt="No Cover Art Available" className="cover-art"/>
     }
     else{
       coverImg = <i className="fas fa-gamepad"></i>

@@ -6,9 +6,21 @@ class Event extends Component {
   constructor(props){
     super(props)
     this.printDate = this.printDate.bind(this)
+    this.grabID = this.grabID.bind(this)
+    this.clickAttend = this.clickAttend.bind(this)
+    this.clickView = this.clickView.bind(this)
+    this.handleAttend = this.handleAttend.bind(this)
+    this.handleView = this.handleView.bind(this)
     this.state = {
-      event: null
+      event: null,
+      attendees: null,
+      viewers: null,
+      currentUserAttendanceType: null
     }
+  }
+
+  grabID(){
+    return this.state.event.id
   }
 
   componentDidMount() {
@@ -25,10 +37,121 @@ class Event extends Component {
       })
       .then(response => response.json())
       .then(response => {
-        this.setState({event: response.event})
-        console.log(this.state)
+        console.log(response.event)
+        this.setState({
+          event: response.event,
+          attendees: response.event.attendees,
+          viewers: response.event.viewers,
+          currentUserAttendanceType: response.event.current_user_attendance_type
+        })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleAttend(eventID){
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    fetch(`/api/v1/attendances`, {
+      method: 'POST',
+      body: JSON.stringify({event_id: this.state.event.id, user_id: this.state.event.user_id, attendance_type: 'attending'}),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      credentials: 'same-origin'
+    })
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status}(${response.statusText})` ,
+          error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleView(eventID){
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    fetch(`/api/v1/attendances`, {
+      method: 'POST',
+      body: JSON.stringify({event_id: this.state.event.id, user_id: this.state.event.user_id, attendance_type: 'viewing'}),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      credentials: 'same-origin'
+    })
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status}(${response.statusText})` ,
+          error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  clickAttend(){
+    if (this.state.event.user_id){
+      let newAttendees = this.state.attendees
+      let newViewers = this.state.viewers
+      let attendanceType = this.state.currentUserAttendanceType
+      this.handleAttend(this.grabID())
+      if (this.state.currentUserAttendanceType === "attending") {
+        newAttendees -= 1
+        this.setState({
+          currentUserAttendanceType: "none",
+          attendees: newAttendees
+        })
+      } else if (this.state.currentUserAttendanceType === "viewing") {
+        newAttendees += 1
+        newViewers -= 1
+        this.setState({
+          currentUserAttendanceType: "attending",
+          attendees: newAttendees,
+          viewers: newViewers
+        })
+      } else {
+        newAttendees += 1
+        this.setState({
+          currentUserAttendanceType: "attending",
+          attendees: newAttendees
+        })
+      }
+    }
+  }
+
+  clickView(){
+    if (this.state.event.user_id){
+      let newAttendees = this.state.attendees
+      let newViewers = this.state.viewers
+      let attendanceType = this.state.currentUserAttendanceType
+      this.handleView(this.grabID())
+      if (this.state.currentUserAttendanceType === "viewing") {
+        newViewers -= 1
+        this.setState({
+          currentUserAttendanceType: "none",
+          viewers: newViewers
+        })
+      } else if (this.state.currentUserAttendanceType === "attending") {
+        newAttendees -= 1
+        newViewers += 1
+        this.setState({
+          currentUserAttendanceType: "viewing",
+          attendees: newAttendees,
+          viewers: newViewers
+        })
+      } else {
+        newViewers += 1
+        this.setState({
+          currentUserAttendanceType: "viewing",
+          viewers: newViewers
+        })
+      }
+    }
   }
 
   printDate(timestamp){
@@ -53,6 +176,8 @@ class Event extends Component {
     let eventStream
     let twitchPieces
     let gameTiles
+    let attendees
+    let viewers
 
     if(this.state.event){
       eventTitle = this.state.event.title
@@ -65,6 +190,12 @@ class Event extends Component {
           <GameTile key={ game.id } gameID={ game.game_id } />
         )
       })
+      if (this.state.attendees > 0){
+        attendees = <span className="attendee-count">{ this.state.attendees } Attending</span>
+      }
+      if (this.state.viewers > 0){
+        viewers = <span className="viewer-count">{ this.state.viewers } Viewing</span>
+      }
     }
 
     return(
@@ -74,6 +205,10 @@ class Event extends Component {
         {gameTiles}
         <p>{eventDescription}</p>
         <p>{eventDateTime}</p>
+        { attendees }
+        { viewers }
+        <button onClick={this.clickAttend}>Attend</button>
+        <button onClick={this.clickView}>View</button>
       </div>
     )
   }
