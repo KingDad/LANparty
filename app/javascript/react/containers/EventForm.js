@@ -57,6 +57,7 @@ class EventForm extends Component {
       playables: this.state.gameIDs
     }
     this.createEvent(formPayload);
+    return window.location.href = '/events'
   }
 
   addGame(gameID){
