@@ -11,11 +11,11 @@ feature 'user signs out', %Q{
   #   forgotten on the machine I'm using
 
   scenario 'authenticated user signs out' do
-    user = User.create(email: 'monkeyKong@gmail.com', password: 'password', user_name: 'monkeyKong')
+    user = FactoryBot.create(:user, user_name: "gameGuy")
 
     visit new_user_session_path
 
-    fill_in 'Email', with: user.email
+    fill_in 'Login', with: user.email
     fill_in 'Password', with: user.password
 
     click_button 'Log in'
