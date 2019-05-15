@@ -1,6 +1,12 @@
+.top-bar, .right{
+  background-color: #442D70;
+}
 .container{
   margin: 0 auto;
   width: 80%;
+}
+.container>div{
+  display: inline-block;
 }
 .fa-gamepad{
   font-size: 50px;
@@ -8,9 +14,56 @@
   padding: 0;
 }
 .game-tile{
+  background-color: #CCB1FD;
   display: inline-block;
-  margin: 1em
+  margin: 1em;
+  width: 150px;
 }
 .game-tile>p{
+  text-align: center;
   margin: 0;
+  padding: 0.5em;
 }
+button{
+  background-color: #734BBD;
+  margin: 1em;
+}
+button:hover, button:focus:hover{
+  background-color: #25183D;
+}
+button:active{
+  outline: none;
+}
+button:focus{
+  background-color: #734BBD;
+  outline: none;
+}
+#twitch-container{
+  display: none;
+  width: 100%;
+}
+#twitch-embed{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+iframe{
+  display: inline-block;
+  vertical-align: top;
+}
+.attendee-count, .viewer-count{
+  display: block;
+}
+.cover-art{
+  display: inline-block;
+  padding: 0 2em 1em;
+}
+$dark = #442D70
+$light = #734BBD
+$lightest = #CCB1FD
+
+
+
+/* maybe later */
+/*$light = #F39826
+$lightest = #FFD5F1*/
