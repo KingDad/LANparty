@@ -79,7 +79,7 @@ class EventForm extends Component {
     return(
       <div className="container">
         <h2>Create a New Event</h2>
-        <form id="event-form" onSubmit={this.handleFormSubmit}>
+        <form id="event-form" onSubmit={this.handleFormSubmit} action="localhost:3000/events">
           <TextField name="title" id="title" label="Title:" content={this.state.title} handleChange={this.takeChange} />
           <TextField name="description" id="description" label="Description:" content={this.state.description} handleChange={this.takeChange} />
           <TextField name="twitchStream" id="twitchStream" label="Name of Twitch Stream:" content={this.state.twitchStream} handleChange={this.takeChange} />

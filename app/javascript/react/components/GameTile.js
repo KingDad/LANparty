@@ -58,7 +58,7 @@ class GameTile extends Component{
     let coverImg
 
     if (this.state.gameName){
-      gameTitle = <p class="game-title">{this.state.gameName}</p>
+      gameTitle = <p className="game-title">{this.state.gameName}</p>
     }
 
     if (this.state.gameCover){

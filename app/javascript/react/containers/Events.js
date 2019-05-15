@@ -33,8 +33,8 @@ class Events extends Component{
     if (this.state.events) {
       events = this.state.events.map(event => {
         return (
-          <li>
-            <Link to={`/events/${event.id}`} key={event.id}>{event.title}</Link>
+          <li key={event.id}>
+            <Link to={`/events/${event.id}`}>{event.title}</Link>
           </li>
         )
       })
