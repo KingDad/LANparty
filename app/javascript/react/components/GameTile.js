@@ -6,8 +6,8 @@ const corsProxy = "https://cors-anywhere.herokuapp.com/";
 class GameTile extends Component{
   constructor(props){
     super(props)
+    this.clickDelete = this.clickDelete.bind(this)
     this.state = {
-      type: this.props.deletable,
       gameCover: null,
       gameName: null
     }
@@ -53,9 +53,14 @@ class GameTile extends Component{
     });
   }
 
+  clickDelete(){
+    this.props.deleteFunction(this.props.gameID)
+  }
+
   render(){
     let gameTitle
     let coverImg
+    let deleteButton
 
     if (this.state.gameName){
       gameTitle = <p className="game-title">{this.state.gameName}</p>
@@ -68,8 +73,13 @@ class GameTile extends Component{
       coverImg = <i className="fas fa-gamepad"></i>
     }
 
+    if (this.props.deletable === true){
+      deleteButton = <a className="delete-button" onClick={this.clickDelete}><i className="fas fa-times-circle"></i></a>
+    }
+
     return(
       <div className="game-tile">
+        { deleteButton }
         { gameTitle }
         { coverImg }
       </div>

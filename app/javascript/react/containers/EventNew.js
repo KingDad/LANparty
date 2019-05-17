@@ -4,13 +4,14 @@ import GameTile from '../components/GameTile'
 import TextField from '../components/TextField'
 import DateTimeField from '../components/DateTimeField'
 
-class EventForm extends Component {
+class EventNew extends Component {
   constructor(props){
     super(props)
     this.takeChange = this.takeChange.bind(this)
     this.createEvent = this.createEvent.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.addGame = this.addGame.bind(this)
+    this.removeGame = this.removeGame.bind(this)
     this.state = {
       title: "",
       description: "",
@@ -37,6 +38,7 @@ class EventForm extends Component {
     })
     .then(response => {
       if (response.ok) {
+        console.log(response)
         return response;
       } else {
         let errorMessage = `${response.status}(${response.statusText})` ,
@@ -66,13 +68,22 @@ class EventForm extends Component {
     this.setState({ gameIDs: newListOfGames })
   }
 
+  removeGame(gameID){
+    let listOfGames = this.state.gameIDs
+    let gameIndex = listOfGames.indexOf(gameID)
+    if (gameIndex > -1){
+      listOfGames.splice(gameIndex, 1)
+    }
+    this.setState({gameIDs: listOfGames})
+  }
+
   render(){
     let gameTiles
 
     if (this.state.gameIDs.length > 0){
       gameTiles = this.state.gameIDs.map((ID) =>{
         return(
-          <GameTile key={ ID } gameID={ ID } />
+          <GameTile key={ID} gameID={ID} deletable={true} deleteFunction={this.removeGame} />
         )
       })
     }
@@ -86,7 +97,7 @@ class EventForm extends Component {
           <TextField name="twitchStream" id="twitchStream" label="Name of Twitch Stream:" content={this.state.twitchStream} handleChange={this.takeChange} />
           <DateTimeField name="eventDateTime" content={this.state.eventDateTime} handleChange={this.takeChange} />
           <label>Search for Games:</label>
-          <GameSearchBar resultClickAction={ this.addGame }/>
+          <GameSearchBar resultClickAction={this.addGame}/>
           { gameTiles }
           <input type="submit" value="Create Event" />
         </form>
@@ -95,4 +106,4 @@ class EventForm extends Component {
   }
 }
 
-export default EventForm
+export default EventNew
