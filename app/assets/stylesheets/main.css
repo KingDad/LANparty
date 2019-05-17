@@ -1,4 +1,5 @@
-.top-bar, .right{
+.top-bar, .right,
+.top-bar-section li:not(.has-form) a:not(.button){
   background-color: #442D70;
 }
 .container{
@@ -9,9 +10,10 @@
   display: inline-block;
 }
 .fa-gamepad{
+  display: inline-block;
   font-size: 50px;
   margin: 0;
-  padding: 0;
+  padding: 0 2em 1em;
 }
 .game-tile{
   background-color: #CCB1FD;
@@ -28,7 +30,7 @@ button{
   background-color: #734BBD;
   margin: 1em;
 }
-button:hover, button:focus:hover{
+button:hover, button:focus:hover, .top-bar-section li:not(.has-form) a:not(.button):hover{
   background-color: #25183D;
 }
 button:active{
