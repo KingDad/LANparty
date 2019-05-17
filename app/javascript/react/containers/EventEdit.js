@@ -40,13 +40,16 @@ class EventEdit extends Component {
     })
     .then(response => {
       if (response.ok) {
-        console.log(response)
         return response;
       } else {
         let errorMessage = `${response.status}(${response.statusText})` ,
         error = new Error(errorMessage);
         throw(error);
       }
+    })
+    .then(response => response.json())
+    .then(body => {
+      return window.location.href = `/events/${body.event.id}`
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -62,7 +65,6 @@ class EventEdit extends Component {
       playables: this.state.gameIDs
     }
     this.sendUpdates(formPayload);
-    return window.location.href = '/events'
   }
 
   addGame(gameID){
