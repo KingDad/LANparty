@@ -38,13 +38,16 @@ class EventNew extends Component {
     })
     .then(response => {
       if (response.ok) {
-        console.log(response)
-        return response;
+        return response
       } else {
         let errorMessage = `${response.status}(${response.statusText})` ,
         error = new Error(errorMessage);
         throw(error);
       }
+    })
+    .then(response => response.json())
+    .then(body => {
+      return window.location.href = `/events/${body.event.id}`
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -59,7 +62,6 @@ class EventNew extends Component {
       playables: this.state.gameIDs
     }
     this.createEvent(formPayload);
-    return window.location.href = '/events'
   }
 
   addGame(gameID){

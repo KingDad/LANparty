@@ -22,6 +22,7 @@ class Api::V1::EventsController < ApplicationController
           playable = Playable.create(event_id: event.id, game_id: gameID)
         end
       end
+      render json: event
     else
       event.update(title: params[:title],
         description: params[:description],
@@ -40,5 +41,16 @@ class Api::V1::EventsController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    event = Event.find(params[:id])
+    event.playables.each do | playable |
+      playable.delete
+    end
+    event.attendances.each do | attendance |
+      attendance.delete
+    end
+    event.delete
   end
 end

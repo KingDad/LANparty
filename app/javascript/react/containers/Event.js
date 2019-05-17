@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TwitchContainer from '../components/TwitchContainer'
 import GameTile from '../components/GameTile'
+import { Link } from 'react-router'
 
 class Event extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ class Event extends Component {
     this.clickView = this.clickView.bind(this)
     this.handleAttend = this.handleAttend.bind(this)
     this.handleView = this.handleView.bind(this)
+    this.clickDelete = this.clickDelete.bind(this)
     this.state = {
       event: null,
       attendees: null,
@@ -24,8 +26,8 @@ class Event extends Component {
   }
 
   componentDidMount() {
-    let eventId = this.props.params.id
-    fetch(`/api/v1/events/${eventId}`)
+    let eventID = this.props.params.id
+    fetch(`/api/v1/events/${eventID}`)
       .then(response => {
         if (response.ok) {
           return response;
@@ -154,9 +156,46 @@ class Event extends Component {
     }
   }
 
+  clickDelete(){
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    let eventID = this.props.params.id
+    fetch(`/api/v1/events/${eventID}`, {
+      method: 'DELETE',
+      body: JSON.stringify({id: eventID}),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log(response)
+        return response;
+      } else {
+        let errorMessage = `${response.status}(${response.statusText})` ,
+        error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    return window.location.href = '/events'
+  }
+
   printDate(timestamp){
     var monthNames = [
-      "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
     ];
     let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let dateTime = new Date(timestamp)
@@ -178,6 +217,7 @@ class Event extends Component {
     let gameTiles
     let attendees
     let viewers
+    let adminButtons
 
     if(this.state.event){
       eventTitle = this.state.event.title
@@ -196,6 +236,14 @@ class Event extends Component {
       if (this.state.viewers > 0){
         viewers = <span className="viewer-count">{ this.state.viewers } Viewing</span>
       }
+      if (this.state.event.creator_id === this.state.event.user_id){
+        adminButtons = (
+          <div>
+            <button><Link to={`/events/${this.state.event.id}/edit`}>Edit</Link></button>
+            <button onClick={this.clickDelete}>Delete</button>
+          </div>
+        )
+      }
     }
 
     return(
@@ -209,6 +257,7 @@ class Event extends Component {
         { viewers }
         <button onClick={this.clickAttend}>Attend</button>
         <button onClick={this.clickView}>View</button>
+        { adminButtons }
       </div>
     )
   }

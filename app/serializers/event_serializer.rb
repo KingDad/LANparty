@@ -1,5 +1,13 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :event_datetime, :user_id, :twitch_stream, :viewers, :attendees, :current_user_attendance_type
+  attributes :id, :title,
+  :description,
+  :event_datetime,
+  :user_id,
+  :twitch_stream,
+  :viewers,
+  :attendees,
+  :creator_id,
+  :current_user_attendance_type
 
   has_many :playables
   has_many :attendances
