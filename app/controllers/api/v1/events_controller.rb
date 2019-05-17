@@ -8,7 +8,7 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def create
-    event = Event.find_by(title: params[:title])
+    event = Event.find_by(id: params[:id])
     if !event
       event = Event.create(title: params[:title],
         description: params[:description],

@@ -3,6 +3,8 @@ class Event < ApplicationRecord
   has_many :attendances
   has_many :users, through: :attendances
 
+  validates :title, uniqueness: true
+
   def attendees
     attendees = 0
     attendances.each do |attendance|

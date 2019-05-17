@@ -8,7 +8,7 @@ class EventEdit extends Component {
   constructor(props){
     super(props)
     this.takeChange = this.takeChange.bind(this)
-    this.createEvent = this.createEvent.bind(this)
+    this.sendUpdates = this.sendUpdates.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.addGame = this.addGame.bind(this)
     this.removeGame = this.removeGame.bind(this)
@@ -26,9 +26,10 @@ class EventEdit extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  createEvent(payload){
+  sendUpdates(payload){
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    fetch(`/api/v1/events`, {
+    let eventId = this.props.params.id
+    fetch(`/api/v1/events/`, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -53,13 +54,14 @@ class EventEdit extends Component {
   handleFormSubmit(event){
     event.preventDefault();
     let formPayload = {
+      id: this.state.event.id,
       title: this.state.title,
       description: this.state.description,
       event_datetime: this.state.eventDateTime,
       twitch_stream: this.state.twitchStream,
       playables: this.state.gameIDs
     }
-    this.createEvent(formPayload);
+    this.sendUpdates(formPayload);
     return window.location.href = '/events'
   }
 
@@ -109,6 +111,7 @@ class EventEdit extends Component {
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
+      console.log(this.props.params)
   }
 
   render(){
