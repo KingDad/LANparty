@@ -40,6 +40,7 @@ class Api::V1::EventsController < ApplicationController
           playable.delete
         end
       end
+      render json: event
     end
   end
 
