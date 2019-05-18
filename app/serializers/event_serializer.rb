@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :title,
+  attributes :id, :formatted_title,
   :description,
   :event_datetime,
   :user_id,
@@ -16,6 +16,10 @@ class EventSerializer < ActiveModel::Serializer
     if current_user
       current_user.id
     end
+  end
+
+  def formatted_title
+    object.title.titleize
   end
 
   def current_user_attendance_type

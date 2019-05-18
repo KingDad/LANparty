@@ -74,7 +74,7 @@ class GameTile extends Component{
     }
 
     if (this.props.deletable === true){
-      deleteButton = <a className="delete-button" onClick={this.clickDelete}><i className="fas fa-times-circle"></i></a>
+      deleteButton = <button className="delete-button" onClick={this.clickDelete}><i className="fas fa-times-circle"></i></button>
     }
 
     return(

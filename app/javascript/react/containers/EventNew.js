@@ -101,7 +101,7 @@ class EventNew extends Component {
           <label>Search for Games:</label>
           <GameSearchBar resultClickAction={this.addGame}/>
           { gameTiles }
-          <input type="submit" value="Create Event" />
+          <button>Create Event</button>
         </form>
       </div>
     )

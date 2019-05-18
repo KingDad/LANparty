@@ -15,7 +15,7 @@ class TwitchContainer extends Component {
     );
     script.addEventListener('load', () => {
       player = new Twitch.Player('twitch-embed', {
-        width: 720,
+        width: "100%",
         height: 480,
         channel: this.props.stream
       });
@@ -41,7 +41,7 @@ class TwitchContainer extends Component {
           id="chat-embed"
           src={`https://www.twitch.tv/embed/${this.props.stream}/chat`}
           height="480"
-          width="300">
+          width="30%">
         </iframe>
       </div>
     )

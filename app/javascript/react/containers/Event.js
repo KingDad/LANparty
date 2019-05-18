@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import TwitchContainer from '../components/TwitchContainer'
 import GameTile from '../components/GameTile'
-import { Link } from 'react-router'
 
 class Event extends Component {
   constructor(props){
@@ -13,6 +12,7 @@ class Event extends Component {
     this.handleAttend = this.handleAttend.bind(this)
     this.handleView = this.handleView.bind(this)
     this.clickDelete = this.clickDelete.bind(this)
+    this.goToEdit = this.goToEdit.bind(this)
     this.state = {
       event: null,
       attendees: null,
@@ -208,6 +208,10 @@ class Event extends Component {
     return `${daysOfWeek[day]} ${monthNames[month]} ${date}, ${year} at ${time}`
   }
 
+  goToEdit(){
+    return window.location.href = `/events/${this.state.event.id}/edit`
+  }
+
   render(){
     let eventTitle
     let eventDescription
@@ -220,7 +224,7 @@ class Event extends Component {
     let adminButtons
 
     if(this.state.event){
-      eventTitle = this.state.event.title
+      eventTitle = this.state.event.formatted_title
       eventDescription = this.state.event.description
       eventDateTime = this.printDate(this.state.event.event_datetime)
       eventStream = this.state.event.twitch_stream
@@ -239,7 +243,7 @@ class Event extends Component {
       if (this.state.event.creator_id === this.state.event.user_id){
         adminButtons = (
           <div>
-            <button><Link to={`/events/${this.state.event.id}/edit`}>Edit</Link></button>
+            <button onClick={this.goToEdit}>Edit</button>
             <button onClick={this.clickDelete}>Delete</button>
           </div>
         )

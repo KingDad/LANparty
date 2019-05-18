@@ -18,7 +18,7 @@ class GameSearchResult extends Component{
 
   render(){
     return(
-      <div>
+      <div className="search-result">
         <p onClick={ this.handleClick }>{this.props.gameTitle}</p>
       </div>
     )
