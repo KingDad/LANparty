@@ -4,6 +4,12 @@
   font-family: 'VT323', monospace;
   font-size: 1.25rem;
 }
+.top-bar-section li:not(.has-form) a:not(.button){
+  padding: 0.75rem 1em 7px
+}
+.top-bar{
+  height: 4rem;
+}
 .nav-link-container{
   display: inline-block;
 }
@@ -11,7 +17,7 @@
   color: #ffffff;
   display: inline-block;
   height: 100%;
-  padding: 0 1em;
+  padding: 0.75rem 1em 7px;
   width: 100%;
 }
 .nav-link-container:hover{
@@ -19,6 +25,11 @@
 }
 #app-title{
   font-size: 3em;
+  padding-top: 6px;
+}
+#header-underline{
+  border-bottom: 2px solid #442D70;
+  width: 25%;
 }
 .container{
   margin: 0 auto;
@@ -39,20 +50,24 @@
 #events>li>a{
   color: #000000;
 }
-#events>li>a:hover::before{
+#events>li>a:hover::before, .search-result>p:hover::before{
   content: ">";
   color: #734BBD;
+}
+#event-form{
+  padding-bottom: 8rem;
 }
 .fa-gamepad{
   display: inline-block;
   font-size: 45px;
-  margin: 1rem 3rem;
+  margin: 0 3rem 1rem;
 }
 .game-tile{
   background-color: #CCB1FD;
   display: inline-block;
   margin: 1em;
   position: relative;
+  vertical-align: top;
   width: 150px;
 }
 .game-tile, .game-tile>img{
@@ -62,7 +77,6 @@
   margin: 0;
   padding: 1.5em 0.5em 0.5em;
   text-align: center;
-  text-decoration: underline;
 }
 p, h2, h3, input:not([type]),
 input[type="text"],
@@ -81,8 +95,33 @@ input[type="time"],
 input[type="url"],
 input[type="color"],
 textarea,
-li {
+li,
+span {
   font-family: 'Hind', sans-serif;
+}
+#searchbar-input{
+  margin: 0;
+}
+#search-results{
+  margin: 0;
+}
+.search-result:last-child{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.search-result{
+  background-color: #fafafa;
+  border: 1px solid #cccccc;
+  border-top: 0;
+  overflow: hidden;
+}
+.search-result>p{
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0 0.5rem;
+}
+.search-result>p:hover{
+  background-color: #CCB1FD;
 }
 button{
   background-color: #734BBD;
@@ -99,8 +138,9 @@ button:focus{
   background-color: #734BBD;
   outline: none;
 }
-.delete-button, .delete-button:hover{
+.delete-button, .delete-button:focus{
   background-color: rgba(0, 0, 0, 0);
+  border-radius: 50px;
   color: #734BBD;
   height: 20px;
   margin: 0;
@@ -109,6 +149,16 @@ button:focus{
   top: 5px;
   right: 5px;
   width: 20px;
+}
+.delete-button:hover, .delete-button:focus:hover{
+  background-color: rgba(0, 0, 0, 0);
+  color: #25183D;
+}
+#form-submit{
+  display: block;
+}
+#form-submit, #attend{
+  margin: 1em 1em 1em 0;
 }
 #twitch-container{
   display: none;

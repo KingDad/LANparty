@@ -252,14 +252,14 @@ class Event extends Component {
 
     return(
       <div className="container">
-        <h2>{eventTitle}</h2>
+        <h2>{eventTitle}<div id="header-underline"></div></h2>
         {twitchPieces}
         {gameTiles}
         <p>{eventDescription}</p>
         <p>{eventDateTime}</p>
         { attendees }
         { viewers }
-        <button onClick={this.clickAttend}>Attend</button>
+        <button id="attend" onClick={this.clickAttend}>Attend</button>
         <button onClick={this.clickView}>View</button>
         { adminButtons }
       </div>

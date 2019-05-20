@@ -128,7 +128,7 @@ class EventEdit extends Component {
       })
     }
     if (this.state.event){
-      title = <h2>Update "{`${this.state.event.formatted_title}`}"</h2>
+      title = <h2>Update "{`${this.state.event.formatted_title}`}"<div id="header-underline"></div></h2>
     }
 
     return(
@@ -142,7 +142,7 @@ class EventEdit extends Component {
           <label>Search for Games:</label>
           <GameSearchBar resultClickAction={ this.addGame }/>
           { gameTiles }
-          <button>Update Event</button>
+          <button id="form-submit">Update Event</button>
         </form>
       </div>
     )

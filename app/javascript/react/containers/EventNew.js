@@ -92,7 +92,7 @@ class EventNew extends Component {
 
     return(
       <div className="container">
-        <h2>Create a New Event</h2>
+        <h2>Create a New Event<div id="header-underline"></div></h2>
         <form id="event-form" onSubmit={this.handleFormSubmit} action="localhost:3000/events">
           <TextField name="title" id="title" label="Title:" content={this.state.title} handleChange={this.takeChange} />
           <TextField name="description" id="description" label="Description:" content={this.state.description} handleChange={this.takeChange} />
@@ -101,7 +101,7 @@ class EventNew extends Component {
           <label>Search for Games:</label>
           <GameSearchBar resultClickAction={this.addGame}/>
           { gameTiles }
-          <button>Create Event</button>
+          <button id="form-submit">Create Event</button>
         </form>
       </div>
     )
