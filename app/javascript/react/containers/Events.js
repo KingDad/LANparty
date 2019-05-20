@@ -34,7 +34,7 @@ class Events extends Component{
       events = this.state.events.map(event => {
         return (
           <li key={event.id}>
-            <Link to={`/events/${event.id}`}>{event.title}</Link>
+            <Link to={`/events/${event.id}`}>{event.formatted_title}</Link>
           </li>
         )
       })
@@ -42,10 +42,9 @@ class Events extends Component{
     return(
 
       <div className="container">
-        <ul>
+        <ul id="events">
           {events}
         </ul>
-        <a href="/events/new">Create New Event</a>
       </div>
     )
   }

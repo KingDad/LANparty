@@ -3,7 +3,7 @@ class HomesController < ApplicationController
     if current_user
       render "index.html.erb"
     else
-      redirect_to "/users/sign_up"
+      redirect_to "/users/sign_in"
     end
   end
 end

@@ -60,11 +60,12 @@ class SearchBar extends Component{
     return(
       <div>
         <input
+          id="searchbar-input"
           type="text"
           value={ this.state.query }
           onChange={ this.onChange }
         />
-        <ul>
+        <ul id="search-results">
           { searchResults }
         </ul>
       </div>

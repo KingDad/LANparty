@@ -105,7 +105,7 @@ class EventEdit extends Component {
         reformattedDatetime = response.event.event_datetime.slice(0, 16)
         this.setState({
           event: response.event,
-          title: response.event.title,
+          title: response.event.formatted_title,
           description: response.event.description,
           eventDateTime: reformattedDatetime,
           twitchStream: response.event.twitch_stream,
@@ -128,7 +128,7 @@ class EventEdit extends Component {
       })
     }
     if (this.state.event){
-      title = <h2>Update "{`${this.state.event.title}`}"</h2>
+      title = <h2>Update "{`${this.state.event.formatted_title}`}"<div id="header-underline"></div></h2>
     }
 
     return(
@@ -142,7 +142,7 @@ class EventEdit extends Component {
           <label>Search for Games:</label>
           <GameSearchBar resultClickAction={ this.addGame }/>
           { gameTiles }
-          <input type="submit" value="Update Event" />
+          <button id="form-submit">Update Event</button>
         </form>
       </div>
     )
