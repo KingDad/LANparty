@@ -4,6 +4,9 @@ class Event < ApplicationRecord
   has_many :users, through: :attendances
 
   validates :title, uniqueness: true
+  validates :title, presence: true
+  validates :event_datetime, presence: true
+  validates :creator_id, presence: true
 
   def attendees
     attendees = 0
