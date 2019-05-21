@@ -63,7 +63,7 @@ describe('event component', () => {
 
     it('Render event time', (done) => {
       setTimeout(() =>{
-        expect(wrapper.text()).toMatch("Mon May 20, 2019 at 8:00 PM")
+        expect(wrapper.text()).toMatch("Mon May 20, 2019 at 8:00:00 PM")
 
         done()
       }, 0)
