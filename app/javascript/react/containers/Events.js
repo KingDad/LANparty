@@ -23,6 +23,7 @@ class Events extends Component{
       .then(response => response.json())
       .then(response => {
         this.setState({events: response.events})
+        console.log(response)
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }

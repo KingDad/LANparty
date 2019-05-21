@@ -39,7 +39,7 @@ class Event extends Component {
       })
       .then(response => response.json())
       .then(response => {
-        console.log(response.event)
+        console.log(response)
         this.setState({
           event: response.event,
           attendees: response.event.attendees,
@@ -170,7 +170,6 @@ class Event extends Component {
     })
     .then(response => {
       if (response.ok) {
-        console.log(response)
         return response;
       } else {
         let errorMessage = `${response.status}(${response.statusText})` ,
@@ -203,8 +202,7 @@ class Event extends Component {
     let month = dateTime.getMonth()
     let date = dateTime.getDate()
     let day = dateTime.getDay()
-    let time = dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-
+    let time = dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', timeZone: 'UTC'})
     return `${daysOfWeek[day]} ${monthNames[month]} ${date}, ${year} at ${time}`
   }
 
