@@ -17,7 +17,8 @@ class EventNew extends Component {
       description: "",
       eventDateTime: "",
       twitchStream: "",
-      gameIDs: []
+      gameIDs: [],
+      errors: {}
     }
   }
 
