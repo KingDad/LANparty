@@ -3,6 +3,7 @@ import GameSearchBar from '../components/GameSearchBar'
 import GameTile from '../components/GameTile'
 import TextField from '../components/TextField'
 import DateTimeField from '../components/DateTimeField'
+import TextAreaField from '../components/TextAreaField'
 
 class EventNew extends Component {
   constructor(props){
@@ -150,7 +151,7 @@ class EventNew extends Component {
         <form id="event-form" onSubmit={this.handleFormSubmit} action="localhost:3000/events">
           {errorDiv}
           <TextField name="title" id="title" label="Title:" content={this.state.title} handleChange={this.takeChange} />
-          <TextField name="description" id="description" label="Description:" content={this.state.description} handleChange={this.takeChange} />
+          <TextAreaField name="description" id="description" label="Description:" content={this.state.description} handleChange={this.takeChange} />
           <TextField name="twitchStream" id="twitchStream" label="Name of Twitch Stream:" content={this.state.twitchStream} handleChange={this.takeChange} />
           <DateTimeField name="eventDateTime" content={this.state.eventDateTime} handleChange={this.takeChange} />
           <label>Search for Games:</label>

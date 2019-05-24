@@ -154,6 +154,9 @@ button:focus{
   background-color: rgba(0, 0, 0, 0);
   color: #25183D;
 }
+textarea{
+  min-height: 5rem;
+}
 #form-submit{
   display: block;
 }
